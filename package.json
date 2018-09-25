@@ -1,0 +1,27 @@
+{
+  "name": "devdock",
+  "version": "0.1.0",
+  "description": "Prototype utility that provides Dev environments built on top of Docker App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikesir87/devdock-node.git"
+  },
+  "author": "Michael Irwin <mikesir87@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mikesir87/devdock-node/issues"
+  },
+  "homepage": "https://github.com/mikesir87/devdock-node#readme",
+  "dependencies": {
+    "terminal-kit": "^1.26.2",
+    "yamljs": "^0.3.0"
+  },
+  "bin" : {
+    "devdock": "./bin/devdock.js"
+  },
+  "preferGlobal": true
+}
