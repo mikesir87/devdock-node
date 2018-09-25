@@ -19,7 +19,7 @@ In order to work, the Docker App you wish to use must have additional service me
 
 - `x-enabled` - used by Docker App to actually disable and remove the service when being rendered
 - `x-devdock-description` - a human friendly name to be used in the interactive menus
-- `x-devdock-setting` - the name of the setting that must be `false` in order to disable the service
+- `x-devdock-setting-name` - the name of the setting that must be `false` in order to disable the service
 
 ### Example Docker App Compose File (truncated)
 
@@ -30,13 +30,13 @@ services:
     image: sample-api-image
     x-enabled: ${enable-api}
     x-devdock-description: API/Backend
-    x-devdock-setting: enable-api
+    x-devdock-setting-name: enable-api
     ...
   frontend:
     image: sample-frontend-image
     x-enabled: ${enable-frontend}
     x-devdock-description: Browser Frontend
-    x-devdock-setting: enable-frontend
+    x-devdock-setting-name: enable-frontend
     ...
 ```
 
