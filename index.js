@@ -5,6 +5,13 @@ const YAML = require('yamljs');
 const homedir = require('os').homedir();
 const term = require( 'terminal-kit' ).terminal ;
 
+const COMPOSE_COMMANDS = [
+    "build", "bundle", "config", "create", "down", "events", "exec", "help",
+    "images", "kill", "logs", "pause", "port", "ps", "pull", "push",
+    "restart", "rm", "run", "scale", "start", "stop",
+    "top", "unpause", "up", "version"
+];
+
 
 let args = [...process.argv.slice(2)];
 if (args.length < 2) {
@@ -92,7 +99,7 @@ async function getSettings(name, appYaml) {
 async function showMenu(name, settings, selectedIndex = 0) {
     term.clear();
 
-    const width = Math.max(52, appImage.length + 8);
+    const width = Math.max(52, appImage.length + 10);
     const spacer = Array(Math.floor((width - 9 - name.length) / 2)).join(' ');
     const imageSpacer = Array(Math.floor((width - 5 - appImage.length) / 2)).join(' ');
     term.cyan( `${Array(width).join('*')}\n` );
@@ -163,7 +170,7 @@ async function run() {
     }
     
 
-    if (args.length === 0) {
+    if (!hasComposeCommand(args)) {
         args = ["up", "-d", "--remove-orphans"]   
 
         updatedSettings = await showMenu(appName, settings);
@@ -187,6 +194,10 @@ async function run() {
     await renderDockerApp(appImage, appName, updatedSettings);
     await startDockerCompose(appName, args);
     process.exit();
+}
+
+function hasComposeCommand(args) {
+    return args.find(c => COMPOSE_COMMANDS.indexOf(c) > -1) !== undefined;
 }
 
 run()
