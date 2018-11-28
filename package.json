@@ -20,7 +20,7 @@
     "terminal-kit": "^1.26.2",
     "yamljs": "^0.3.0"
   },
-  "bin" : {
+  "bin": {
     "devdock": "./bin/devdock.js"
   },
   "preferGlobal": true

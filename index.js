@@ -15,7 +15,7 @@ if (args.length < 2) {
 }
 
 const appName = args.shift();
-const appImage = args.shift();
+const appImage = getAppImage(args.shift());
 const uppercasedName = appName.charAt(0).toUpperCase() + appName.slice(1);
 
 
@@ -25,6 +25,22 @@ term.on("key" , function( key , matches , data ) {
 
 if (!fs.existsSync(`${homedir}/.devdock`)) {
     fs.mkdirSync(`${homedir}/.devdock`);
+}
+
+function getAppImage(imageArg) {
+    if (imageArg.indexOf("{BRANCH}") === -1)
+        return imageArg;
+    let branch = getGitBranch() || "master";
+    return imageArg.replace("{BRANCH}", branch);
+}
+
+function getGitBranch() {
+    if (!fs.existsSync(".git/HEAD"))
+        return null;
+
+    const file = fs.readFileSync(".git/HEAD");
+    const match = /ref: refs\/heads\/([^\n]+)/.exec(file.toString());
+    return match ? match[1] : null;
 }
 
 
@@ -76,10 +92,13 @@ async function getSettings(name, appYaml) {
 async function showMenu(name, settings, selectedIndex = 0) {
     term.clear();
 
-    const spacer = Array(Math.floor((48 - 9 - name.length) / 2)).join(' ');
-    term.cyan( '************************************************\n' );
+    const width = Math.max(52, appImage.length + 8);
+    const spacer = Array(Math.floor((width - 9 - name.length) / 2)).join(' ');
+    const imageSpacer = Array(Math.floor((width - 5 - appImage.length) / 2)).join(' ');
+    term.cyan( `${Array(width).join('*')}\n` );
     term.cyan( `${spacer}${uppercasedName}-in-a-Box\n` );
-    term.cyan( '************************************************\n\n' );
+    term.cyan( `${imageSpacer}App: ${appImage}\n` );
+    term.cyan( `${Array(width).join('*')}\n\n` );
     term( 'What services would you like to disable?\n' ) ;
 
     const items = [

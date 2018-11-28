@@ -56,6 +56,19 @@ devdock [PROJECT-NAME] [APP-IMAGE] ps
 devdock voting-app mikesir87/votingapp.dockerapp:0.1.0 ps
 ```
 
+## Image Variable Support
+
+On our team, we make use of feature branches. Each feature branch has its own deployed Docker App. If the image contains `{BRANCH}`, the value will be replaced with the name of the current checked out branch. If no branch is detected, it falls back to `master`.
+
+### Example
+
+```
+# Imagine in a git repo on branch 3-test-something
+devdock sample mikesir87/votingapp.dockerapp:{BRANCH} config
+# This will end up pulling mikesir87/votingapp.dockerapp:3-test-something
+```
+
+
 ### Using Aliases
 
 To make things simple, you can make aliases to wrap the command and provide a simple project-specific "cli tool". For example, if I were working on the Docker Voting App, I could simply add this to my `~/.bash_profile`:
@@ -80,8 +93,8 @@ The [mikesir87/devdock-demo](https://github.com/mikesir87/devdock-demo) repo con
 
 There are a few things I'd like to see, as we already have use cases for them. Here are a few items...
 
-- Ability to overlay additional compose files (to mount volumes, expose ports, etc.)
-
+- When [Docker App PR #418](https://github.com/docker/app/pull/418) is merged, we can drop the need for `x-devdock-setting-name`
+- Clean up code so it's not in one mega-file (still just a prototype right now)
 
 ## License
 
