@@ -1,6 +1,6 @@
 {
   "name": "devdock",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Prototype utility that provides Dev environments built on top of Docker App",
   "main": "index.js",
   "scripts": {
